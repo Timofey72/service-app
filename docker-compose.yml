@@ -1,3 +1,18 @@
+x-worker_defaults: &worker_defaults
+  build:
+    context: .
+  env_file:
+    - .env
+  entrypoint: celery
+  command: -A celery_app.app worker --loglevel=info
+  volumes:
+    - ./service:/service
+  links:
+    - redis
+  depends_on:
+    - redis
+    - database
+
 services:
   web-app:
     build:
@@ -25,49 +40,17 @@ services:
     hostname: redis
 
   worker:
-    build:
-      context: .
-    env_file:
-      - .env
+    <<: *worker_defaults
     hostname: worker
-    entrypoint: celery
-    command: -A celery_app.app worker --loglevel=info
-    volumes:
-      - ./service:/service
-    links:
-      - redis
-    depends_on:
-      - redis
-      - database
 
   worker2:
-    build:
-      context: .
-    env_file:
-      - .env
+    <<: *worker_defaults
     hostname: worker2
-    entrypoint: celery
-    command: -A celery_app.app worker --loglevel=info
-    volumes:
-      - ./service:/service
-    links:
-      - redis
-    depends_on:
-      - redis
-      - database
 
   flower:
-    build:
-      context: .
-    env_file:
-      - .env
+    <<: *worker_defaults
     hostname: flower
-    entrypoint: celery
     command: -A celery_app.app flower
-    volumes:
-      - ./service:/service
-    links:
-      - redis
     depends_on:
       - redis
     ports:

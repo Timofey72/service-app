@@ -36,3 +36,8 @@ def set_comment(subscription_id: int):
         subscription.save()
 
     cache.delete(settings.PRICE_CACHE_NAME)
+
+
+def start_task_for_subscription(sub_id: int):
+    transaction.on_commit(lambda: set_price.delay(sub_id))
+    transaction.on_commit(lambda: set_comment.delay(sub_id))

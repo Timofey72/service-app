@@ -3,7 +3,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 from .models import Subscription, Service, Plan
-from .tasks import set_price
+from .tasks import set_price, set_comment
 
 
 @receiver(pre_save, sender=Service)
@@ -13,6 +13,7 @@ def pre_save_service(sender, instance, **kwargs):
         for subscription_id in list(instance.subscriptions.all().values_list('id', flat=True)):
             def start_task_for_subscription(sub_id: int):
                 transaction.on_commit(lambda: set_price.delay(sub_id))
+                transaction.on_commit(lambda: set_comment.delay(sub_id))
 
             start_task_for_subscription(subscription_id)
 
@@ -24,6 +25,7 @@ def pre_save_plan(sender, instance, **kwargs):
         for subscription_id in list(instance.subscriptions.all().values_list('id', flat=True)):
             def start_task_for_subscription(sub_id: int):
                 transaction.on_commit(lambda: set_price.delay(sub_id))
+                transaction.on_commit(lambda: set_comment.delay(sub_id))
 
             start_task_for_subscription(subscription_id)
 

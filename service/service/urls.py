@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
 
+from clients.views import ClientView
 from services.views import SubscriptionView, PlanView, ServiceView
 
 urlpatterns = [
@@ -27,5 +28,6 @@ router = routers.DefaultRouter()
 router.register(r'api/subscriptions', SubscriptionView)
 router.register(r'api/plans', PlanView)
 router.register(r'api/services', ServiceView)
+router.register(r'api/clients', ClientView)
 
 urlpatterns += router.urls

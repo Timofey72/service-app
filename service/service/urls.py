@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
 
-from services.views import SubscriptionView
+from services.views import SubscriptionView, PlanView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,6 @@ urlpatterns = [
 
 router = routers.DefaultRouter()
 router.register(r'api/subscriptions', SubscriptionView)
+router.register(r'api/plans', PlanView)
 
 urlpatterns += router.urls

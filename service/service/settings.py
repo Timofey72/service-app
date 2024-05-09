@@ -148,3 +148,5 @@ CACHES = {
 }
 
 PRICE_CACHE_NAME = 'price_cache'
+
+APPEND_SLASH = True

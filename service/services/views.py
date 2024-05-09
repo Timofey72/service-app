@@ -2,11 +2,11 @@ from django.conf import settings
 from django.db.models import Prefetch, Sum
 from django.core.cache import cache
 from rest_framework import mixins
-from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 
 from clients.models import Client
-from .models import Subscription, Plan
-from .serializers import SubscriptionSerializer, PlanSerializer
+from .models import Subscription, Plan, Service
+from .serializers import SubscriptionSerializer, PlanSerializer, ServiceSerializer
 
 
 class SubscriptionView(ReadOnlyModelViewSet):
@@ -37,3 +37,8 @@ class SubscriptionView(ReadOnlyModelViewSet):
 class PlanView(ReadOnlyModelViewSet, mixins.UpdateModelMixin):
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
+
+
+class ServiceView(ModelViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer

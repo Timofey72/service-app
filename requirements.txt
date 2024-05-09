@@ -6,3 +6,4 @@ flower==1.2.0
 celery-singleton==0.3.1
 django-redis==5.4.0
 django-cachalot==2.6.2
+drf-spectacular==0.27.2

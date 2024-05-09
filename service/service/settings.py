@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cachalot',
+    'drf_spectacular',
     'clients',
     'services',
 ]
@@ -150,3 +151,14 @@ CACHES = {
 PRICE_CACHE_NAME = 'price_cache'
 
 APPEND_SLASH = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ServiceApp Test Swagger API',
+    'DESCRIPTION': 'service-app (django==3.2.16)',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}

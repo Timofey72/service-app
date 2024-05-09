@@ -18,6 +18,8 @@ class ClientSerializer(serializers.ModelSerializer):
         fields = ('id', 'company_name', 'full_address', 'user')
 
     def create(self, validated_data):
+        username = validated_data['user'].get('username', '')
+        email = validated_data['user'].get('email', '')
         return Client.objects.create(company_name=validated_data['company_name'],
                                      full_address=validated_data['full_address'],
-                                     user=User.objects.create(username=validated_data['user']['username']))
+                                     user=User.objects.create(username=username, email=email))
